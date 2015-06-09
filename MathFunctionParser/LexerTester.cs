@@ -34,13 +34,28 @@ namespace MathFunctionParser
             Assert.AreEqual("sin(x*y+cos(y*ln(y*pi)-78))", str);
         }
         [TestCase]
-        public void TestDoesItEvenRun()
+        public void TestSimpleFunctionCase()
         {
             LinkedList<Token> list = lexer.AnalyzeString(" sin(xy ) ");
+            string str = "";
             foreach(Token t in list)
             {
-                Console.Write(t.ToString());
+                str += t.ToString();
             }
+            Assert.AreEqual("Sin(xy)", str);
+
+        }
+        [TestCase]
+        public void TestComplexCase()
+        {
+            LinkedList<Token> list = lexer.AnalyzeString(" sin(x * y + cos( y * ln( y * pi ) - 78 ) )    ");
+            string str = "";
+            foreach (Token t in list)
+            {
+                str += t.ToString();
+            }
+            Assert.AreEqual("Sin(x*y+Cos(y*Ln(y*3.14159)-78))", str);
+
         }
     }
 }

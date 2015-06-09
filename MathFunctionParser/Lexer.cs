@@ -31,8 +31,6 @@ namespace MathFunctionParser
         public Lexer() 
             : this(ExpressionDB.GetDefaultVarDB(), ExpressionDB.GetDefaultConstDB())
         {
-            funcDB = ExpressionDB.GetFuncDB();
-            constDB = ExpressionDB.GetDefaultConstDB();
         }
         // This constructor allows the use of custom variables and constants
         public Lexer(SortedDictionary<string, Token> varDB,
@@ -40,6 +38,8 @@ namespace MathFunctionParser
         {
             this.varDB = varDB;
             this.constDB = constDB;
+            funcDB = ExpressionDB.GetFuncDB();
+            opDB = ExpressionDB.GetOperatorDB();
         }
 
         /** Methods */
@@ -53,26 +53,33 @@ namespace MathFunctionParser
             int startIndex = 0;
             while (startIndex < expressionLC.Length)
             {
-                AnalyzeString(startIndex, expressionLC.Length, tokenList);
+                startIndex = AnalyzeString(startIndex, expressionLC.Length, tokenList);
+                Console.WriteLine("Expression: " + expression);
+                Console.WriteLine("StartIndex: " + startIndex);
             }
+            Console.WriteLine();
             return tokenList;
         }
         // Helper method to public AnalyzeString
         // Analyzes from start (inclusive) to end (exclusive)
         private int AnalyzeString(int start, int end, LinkedList<Token> list)
         {
+            Console.WriteLine(expression);
+            Console.WriteLine("Analyzing from " + start + " until " + end);
             // Token to add to the list
             Token tok = null;
             string subString;
             int numberOfSubExpressions = CountBrackets(start, end);
+            int retVal = end;
             // Case: Function Analysis
             // If true, there might be a function to analyze
-            if (numberOfSubExpressions > 0)
+            if (retVal == end && numberOfSubExpressions > 0)
             {
                 int leftBracketIdx = expressionLC.IndexOf('(' , start);
-                int rightBracketIdx = expressionLC.IndexOf(')' , start);
+                int rightBracketIdx = expressionLC.LastIndexOf(')' , end-1);
                 // The from the start index to the index of '('
-                subString = expressionLC.Substring(start, leftBracketIdx);
+                subString = expressionLC.Substring(start, leftBracketIdx-start);
+                Console.WriteLine("The subString before '(' is " + subString);
                 // If true, then there's a function to analyze
                 if (leftBracketIdx == start || funcDB.ContainsKey(subString))
                 {
@@ -80,26 +87,32 @@ namespace MathFunctionParser
                         tok = new Token(FunctionType.RegularExpression);
                     else
                         tok = new Token(funcDB[subString]);
-                    AnalyzeString(leftBracketIdx + 1, end, tok.subList);
+                    subString = expression.Substring(leftBracketIdx + 1, rightBracketIdx-leftBracketIdx-1);
+                    Lexer subLex = new Lexer();
+                    tok.subList = subLex.AnalyzeString(subString);
                     list.AddLast(tok);
-                    return rightBracketIdx + 1;
+                    return (rightBracketIdx + 1);
+                    //return rightBracketIdx + 1;
                 }
             }
             int indexOfNextOp = IndexOfNextOp(start, end);
             // Case: Operators Analysis 
             // If the index of the next operator isn't -1, then the string 
             // before that operator should be some number
-            if (indexOfNextOp != -1)
+            if (retVal == end && indexOfNextOp != -1)
             {
                 // Recursively call this function on the preceding string
-                AnalyzeString(start, indexOfNextOp, list);
+                if( start != indexOfNextOp )
+                    AnalyzeString(start, indexOfNextOp, list);
                 // Add the operator to the list
                 list.AddLast(opDB[expression[indexOfNextOp]]);
-                return indexOfNextOp + 1;
+                Console.WriteLine("Index of next Operator: " + indexOfNextOp);
+                return (indexOfNextOp + 1);
             }
             // At this point, we assume this substring is some plain number, 
             // constant, or a variable. We define the substring key to verify
             subString = expression.Substring(start, end - start);
+            Console.WriteLine("Number Substring: " + subString);
             // Case: Variable Analysis
             if (varDB.ContainsKey(subString))
             {
@@ -117,8 +130,7 @@ namespace MathFunctionParser
             {
                 list.AddLast(new Token(TokenType.Constant, subString));
             }
-            //TODO: Change return value
-            return end;
+            return retVal;
         }
         /** This function counts the number of bracket pairs for a definable 
          *  substring region. It looks from start(inclusive) to end(exclusive)
@@ -156,7 +168,7 @@ namespace MathFunctionParser
             if( leftCounter != rightCounter )
             {
                 errType = LexerException.Type.BracketCountMismatch;
-                throw new LexerException(errType);
+                throw new LexerException(errType, leftCounter.ToString() + " " + rightCounter.ToString());
             }
             return leftCounter;
         }

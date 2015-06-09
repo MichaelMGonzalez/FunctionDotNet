@@ -18,6 +18,10 @@ namespace MathFunctionParser
         {
             this.type = type;
         }
+        public LexerException(Type type, string moreInfo) : base (GetErrMessage(type) + moreInfo)
+        {
+            this.type = type;
+        }
         private static string GetErrMessage(Type type)
         {
             string errMsg = "";
