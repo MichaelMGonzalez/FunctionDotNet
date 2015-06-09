@@ -56,12 +56,29 @@ namespace MathFunctionParser
         {
             this.function = func;
             this.type = TokenType.Function;
+            subList = new LinkedList<Token>();
         }
         public Token(TokenType type, string expression)
         {
             this.type = type;
             this.expression = expression;
             this.function = FunctionType.RegularExpression;
+        }
+        public override string ToString()
+        {
+            string retVal = "";
+            if (type == TokenType.Function)
+            {
+                if (function != FunctionType.RegularExpression)
+                    retVal += function.ToString();
+                retVal += "(";
+                foreach (Token t in subList)
+                    retVal += t.ToString();
+                retVal += ")";
+                return retVal;
+
+            }
+            return expression;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MathFunctionParser
     {
         public static SortedDictionary<string, FunctionType> GetFuncDB()
         {
-            SortedDictionary<string, FunctionType> db = new SortedDictionary<FunctionType, Token>();
+            SortedDictionary<string, FunctionType> db = new SortedDictionary<string, FunctionType>();
             db["sin"] = FunctionType.Sin;
             db["cos"] = FunctionType.Cos;
             db["tan"] = FunctionType.Tan;

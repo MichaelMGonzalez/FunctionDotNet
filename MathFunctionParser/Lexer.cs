@@ -50,16 +50,20 @@ namespace MathFunctionParser
             LinkedList<Token> tokenList= new LinkedList<Token>();
             this.expression = RemoveAllWhiteSpace(expression);
             expressionLC = this.expression.ToLower();
-            AnalyzeString(0, expressionLC.Length, tokenList);
+            int startIndex = 0;
+            while (startIndex < expressionLC.Length)
+            {
+                AnalyzeString(startIndex, expressionLC.Length, tokenList);
+            }
             return tokenList;
         }
         // Helper method to public AnalyzeString
         // Analyzes from start (inclusive) to end (exclusive)
-        private void AnalyzeString(int start, int end, LinkedList<Token> list)
+        private int AnalyzeString(int start, int end, LinkedList<Token> list)
         {
             // Token to add to the list
             Token tok = null;
-            string funcSS;
+            string subString;
             int numberOfSubExpressions = CountBrackets(start, end);
             // Case: Function Analysis
             // If true, there might be a function to analyze
@@ -67,22 +71,54 @@ namespace MathFunctionParser
             {
                 int leftBracketIdx = expressionLC.IndexOf('(' , start);
                 int rightBracketIdx = expressionLC.IndexOf(')' , start);
-                funcSS = expressionLC.Substring(start, leftBracketIdx);
+                // The from the start index to the index of '('
+                subString = expressionLC.Substring(start, leftBracketIdx);
                 // If true, then there's a function to analyze
-                if (leftBracketIdx == start || funcDB.ContainsKey(funcSS))
+                if (leftBracketIdx == start || funcDB.ContainsKey(subString))
                 {
                     if (leftBracketIdx == start)
-                    {
                         tok = new Token(FunctionType.RegularExpression);
-                    }
                     else
-                        tok = new Token(funcDB[funcSS]);
+                        tok = new Token(funcDB[subString]);
                     AnalyzeString(leftBracketIdx + 1, end, tok.subList);
                     list.AddLast(tok);
-                    
+                    return rightBracketIdx + 1;
                 }
             }
             int indexOfNextOp = IndexOfNextOp(start, end);
+            // Case: Operators Analysis 
+            // If the index of the next operator isn't -1, then the string 
+            // before that operator should be some number
+            if (indexOfNextOp != -1)
+            {
+                // Recursively call this function on the preceding string
+                AnalyzeString(start, indexOfNextOp, list);
+                // Add the operator to the list
+                list.AddLast(opDB[expression[indexOfNextOp]]);
+                return indexOfNextOp + 1;
+            }
+            // At this point, we assume this substring is some plain number, 
+            // constant, or a variable. We define the substring key to verify
+            subString = expression.Substring(start, end - start);
+            // Case: Variable Analysis
+            if (varDB.ContainsKey(subString))
+            {
+                list.AddLast(varDB[subString]);
+            }
+            // Case: Constant Analysis
+            else if (constDB.ContainsKey(subString))
+            {
+                list.AddLast(constDB[subString]);
+            }
+            // Case: Plain Number
+            // It might not be a plain number (random string) but the parser
+            // will throw out such input
+            else
+            {
+                list.AddLast(new Token(TokenType.Constant, subString));
+            }
+            //TODO: Change return value
+            return end;
         }
         /** This function counts the number of bracket pairs for a definable 
          *  substring region. It looks from start(inclusive) to end(exclusive)

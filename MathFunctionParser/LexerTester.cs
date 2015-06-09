@@ -33,5 +33,14 @@ namespace MathFunctionParser
             string str = lexer.RemoveAllWhiteSpace(" sin(x * y + cos( y * ln( y * pi ) - 78 ) )    ");
             Assert.AreEqual("sin(x*y+cos(y*ln(y*pi)-78))", str);
         }
+        [TestCase]
+        public void TestDoesItEvenRun()
+        {
+            LinkedList<Token> list = lexer.AnalyzeString(" sin(xy ) ");
+            foreach(Token t in list)
+            {
+                Console.Write(t.ToString());
+            }
+        }
     }
 }
