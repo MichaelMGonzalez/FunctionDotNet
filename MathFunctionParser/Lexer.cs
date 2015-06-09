@@ -52,7 +52,7 @@ namespace MathFunctionParser
         {
             return null;
         }
-        private string RemoveAllWhiteSpace(string expression)
+        public string RemoveAllWhiteSpace(string expression)
         {
             // Value to return
             string retVal = string.Copy(expression).Trim();

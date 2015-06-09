@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MathFunctionParser
 {
-    enum TokenType
+    public enum TokenType
     {
         Function,
         Operator,
         Variable,
         Constant
     }
-    enum FunctionType
+    public enum FunctionType
     {
         Sin,
         Cos,
@@ -46,7 +46,7 @@ namespace MathFunctionParser
         RegularExpression
     }
     /** This class represents a token to be read by the expression parser */
-    class Token
+    public class Token
     {
         public string expression;
         public TokenType type;
