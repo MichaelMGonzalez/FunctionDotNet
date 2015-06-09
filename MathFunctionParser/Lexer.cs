@@ -65,6 +65,14 @@ namespace MathFunctionParser
          */
         private int CountBrackets(int start, int end)
         {
+            // If an exception happen, then it's stored here
+            LexerException.Type errType;
+            // Throw an exception if expression isn't set
+            if(expression == null)
+            {
+                errType = LexerException.Type.ExpressionNotDefined;
+                throw new LexerException(errType);
+            }
             // Keeps track of the number of left and right brackets
             int leftCounter = 0;
             int rightCounter = 0;
@@ -81,9 +89,11 @@ namespace MathFunctionParser
                         break;
                 }
             }
+            // Throws exception
             if( leftCounter != rightCounter )
             {
-                // Throw exception
+                errType = LexerException.Type.BracketCountMismatch;
+                throw new LexerException(errType);
             }
             return leftCounter;
         }

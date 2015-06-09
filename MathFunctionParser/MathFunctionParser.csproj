@@ -52,6 +52,7 @@
     <Compile Include="ExpressionDB.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerTester.cs" />
+    <Compile Include="MathException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
   </ItemGroup>
