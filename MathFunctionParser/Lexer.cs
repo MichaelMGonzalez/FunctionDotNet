@@ -45,31 +45,37 @@ namespace MathFunctionParser
         /** Methods */
 
         // Returns a token queue to parse
-        public Queue<Token> AnalyzeString(string expression)
+        public LinkedList<Token> AnalyzeString(string expression)
         {
+            LinkedList<Token> tokenList= new LinkedList<Token>();
             this.expression = RemoveAllWhiteSpace(expression);
             expressionLC = this.expression.ToLower();
-            return AnalyzeString(0, expressionLC.Length);
+            AnalyzeString(0, expressionLC.Length, tokenList);
+            return tokenList;
         }
         // Helper method to public AnalyzeString
         // Analyzes from start (inclusive) to end (exclusive)
-        private Queue<Token> AnalyzeString(int start, int end)
+        private void AnalyzeString(int start, int end, LinkedList<Token> deque)
         {
             string funcSS;
-            Queue<Token> tokenQueue = new Queue<Token>();
             int numberOfSubExpressions = CountBrackets(start, end);
+            // Case: Function Analysis
+            // If true, there might be a function to analyze
             if (numberOfSubExpressions > 0)
             {
                 int leftBracketIdx = expressionLC.IndexOf('(' , start);
                 int rightBracketIdx = expressionLC.IndexOf(')' , start);
                 funcSS = expressionLC.Substring(start, leftBracketIdx);
+                // If true, then there's a function to analyze
                 if (leftBracketIdx == start || funcDB.ContainsKey(funcSS))
                 {
+                    if (leftBracketIdx == start)
+                    {
 
+                    }
                 }
             }
             int indexOfNextOp = IndexOfNextOp(start, end);
-            return null;
         }
         /** This function counts the number of bracket pairs for a definable 
          *  substring region. It looks from start(inclusive) to end(exclusive)
