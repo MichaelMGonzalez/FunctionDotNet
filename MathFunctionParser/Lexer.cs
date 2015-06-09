@@ -44,13 +44,48 @@ namespace MathFunctionParser
 
         /** Methods */
 
+        // Returns a token queue to parse
         public Queue<Token> AnalyzeString(string expression)
         {
-            return null;
+            this.expression = RemoveAllWhiteSpace(expression);
+            expressionLC = this.expression.ToLower();
+            return AnalyzeString(0, expressionLC.Length);
         }
+        // Helper method to public AnalyzeString
+        // Analyzes from start (inclusive) to end (exclusive)
         private Queue<Token> AnalyzeString(int start, int end)
         {
             return null;
+        }
+        /** This function counts the number of bracket pairs for a definable 
+         *  substring region. It looks from start(inclusive) to end(exclusive)
+         *  This function will throw an exception if the expression has not 
+         *  been defined or if the number of left brackets is not equal to the
+         *  number of right brackets
+         */
+        private int CountBrackets(int start, int end)
+        {
+            // Keeps track of the number of left and right brackets
+            int leftCounter = 0;
+            int rightCounter = 0;
+            // Count the number of bracket pairs
+            for (int i = start; i < end; i++)
+            {
+                switch( expression[i] )
+                {
+                    case '(':
+                        leftCounter++;
+                        break;
+                    case ')':
+                        rightCounter++;
+                        break;
+                }
+            }
+            if( leftCounter != rightCounter )
+            {
+                // Throw exception
+            }
+            return leftCounter;
         }
         public string RemoveAllWhiteSpace(string expression)
         {
