@@ -55,10 +55,10 @@ namespace MathFunctionParser
         }
         // Helper method to public AnalyzeString
         // Analyzes from start (inclusive) to end (exclusive)
-        private void AnalyzeString(int start, int end, LinkedList<Token> deque)
+        private void AnalyzeString(int start, int end, LinkedList<Token> list)
         {
             // Token to add to the list
-            Token tok;
+            Token tok = null;
             string funcSS;
             int numberOfSubExpressions = CountBrackets(start, end);
             // Case: Function Analysis
@@ -77,6 +77,9 @@ namespace MathFunctionParser
                     }
                     else
                         tok = new Token(funcDB[funcSS]);
+                    AnalyzeString(leftBracketIdx + 1, end, tok.subList);
+                    list.AddLast(tok);
+                    
                 }
             }
             int indexOfNextOp = IndexOfNextOp(start, end);

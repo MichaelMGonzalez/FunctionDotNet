@@ -51,6 +51,7 @@ namespace MathFunctionParser
         public string expression;
         public TokenType type;
         public FunctionType function;
+        public LinkedList<Token> subList;
         public Token(FunctionType func)
         {
             this.function = func;
