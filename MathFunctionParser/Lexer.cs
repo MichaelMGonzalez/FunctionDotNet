@@ -55,6 +55,20 @@ namespace MathFunctionParser
         // Analyzes from start (inclusive) to end (exclusive)
         private Queue<Token> AnalyzeString(int start, int end)
         {
+            string funcSS;
+            Queue<Token> tokenQueue = new Queue<Token>();
+            int numberOfSubExpressions = CountBrackets(start, end);
+            if (numberOfSubExpressions > 0)
+            {
+                int leftBracketIdx = expressionLC.IndexOf('(' , start);
+                int rightBracketIdx = expressionLC.IndexOf(')' , start);
+                funcSS = expressionLC.Substring(start, leftBracketIdx);
+                if (leftBracketIdx == start || funcDB.ContainsKey(funcSS))
+                {
+
+                }
+            }
+            int indexOfNextOp = IndexOfNextOp(start, end);
             return null;
         }
         /** This function counts the number of bracket pairs for a definable 
@@ -96,6 +110,22 @@ namespace MathFunctionParser
                 throw new LexerException(errType);
             }
             return leftCounter;
+        }
+        /** This function returns the index of the next operator or -1 if one
+         *  cannot be found. It searchs expression from start(inclusive) to 
+         *  end(exclusive). 
+         */
+        private int IndexOfNextOp(int start, int end)
+        {
+            // Index
+            for (int i = start; i < end; i++ )
+            {
+                if (opDB.ContainsKey(expression[i]))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
         public string RemoveAllWhiteSpace(string expression)
         {
