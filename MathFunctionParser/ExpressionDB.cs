@@ -8,37 +8,37 @@ namespace MathFunctionParser
 {
     public class ExpressionDB
     {
-        public static SortedDictionary<string, Token> GetFuncDB()
+        public static SortedDictionary<string, FunctionType> GetFuncDB()
         {
-            SortedDictionary<string, Token> db = new SortedDictionary<string, Token>();
-            db["sin"] = new Token(FunctionType.Sin);
-            db["cos"] = new Token(FunctionType.Cos);
-            db["tan"] = new Token(FunctionType.Tan);
-            db["csc"] = new Token(FunctionType.Csc);
-            db["sec"] = new Token(FunctionType.Sec);
-            db["cot"] = new Token(FunctionType.Cot);
-            db["sinh"] = new Token(FunctionType.Sinh);
-            db["cosh"] = new Token(FunctionType.Cosh);
-            db["tanh"] = new Token(FunctionType.Tanh);
-            db["csch"] = new Token(FunctionType.Csch);
-            db["sech"] = new Token(FunctionType.Sech);
-            db["coth"] = new Token(FunctionType.Coth);
-            db["arcsin"] = new Token(FunctionType.Arcsin);
-            db["arccos"] = new Token(FunctionType.Arccos);
-            db["arctan"] = new Token(FunctionType.Arctan);
-            db["arccsc"] = new Token(FunctionType.Arccsc);
-            db["arcsec"] = new Token(FunctionType.Arcsec);
-            db["arccot"] = new Token(FunctionType.Arccot);
-            db["arcsinh"] = new Token(FunctionType.Arcsinh);
-            db["arccosh"] = new Token(FunctionType.Arccosh);
-            db["arctanh"] = new Token(FunctionType.Arctanh);
-            db["arccsch"] = new Token(FunctionType.Arccsch);
-            db["arcsech"] = new Token(FunctionType.Arcsech);
-            db["arccoth"] = new Token(FunctionType.Arccoth);
-            db["ln"] = new Token(FunctionType.Ln);
-            db["log"] = new Token(FunctionType.Log);
-            db["floor"] = new Token(FunctionType.Floor);
-            db["ceiling"] = new Token(FunctionType.Ceiling);
+            SortedDictionary<string, FunctionType> db = new SortedDictionary<FunctionType, Token>();
+            db["sin"] = FunctionType.Sin;
+            db["cos"] = FunctionType.Cos;
+            db["tan"] = FunctionType.Tan;
+            db["csc"] = FunctionType.Csc;
+            db["sec"] = FunctionType.Sec;
+            db["cot"] = FunctionType.Cot;
+            db["sinh"] = FunctionType.Sinh;
+            db["cosh"] = FunctionType.Cosh;
+            db["tanh"] = FunctionType.Tanh;
+            db["csch"] = FunctionType.Csch;
+            db["sech"] = FunctionType.Sech;
+            db["coth"] = FunctionType.Coth;
+            db["arcsin"] = FunctionType.Arcsin;
+            db["arccos"] = FunctionType.Arccos;
+            db["arctan"] = FunctionType.Arctan;
+            db["arccsc"] = FunctionType.Arccsc;
+            db["arcsec"] = FunctionType.Arcsec;
+            db["arccot"] = FunctionType.Arccot;
+            db["arcsinh"] = FunctionType.Arcsinh;
+            db["arccosh"] = FunctionType.Arccosh;
+            db["arctanh"] = FunctionType.Arctanh;
+            db["arccsch"] = FunctionType.Arccsch;
+            db["arcsech"] = FunctionType.Arcsech;
+            db["arccoth"] = FunctionType.Arccoth;
+            db["ln"] = FunctionType.Ln;
+            db["log"] = FunctionType.Log;
+            db["floor"] = FunctionType.Floor;
+            db["ceiling"] = FunctionType.Ceiling;
             return db;
         } 
         public static SortedDictionary<char, Token> GetOperatorDB()

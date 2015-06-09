@@ -15,7 +15,7 @@ namespace MathFunctionParser
         /** Fields */
 
         // DBs
-        private SortedDictionary<string, Token> funcDB;
+        private SortedDictionary<string, FunctionType> funcDB;
         private SortedDictionary<string, Token> constDB;
         private SortedDictionary<string, Token> varDB;
         private SortedDictionary<char, Token> opDB;
@@ -57,6 +57,8 @@ namespace MathFunctionParser
         // Analyzes from start (inclusive) to end (exclusive)
         private void AnalyzeString(int start, int end, LinkedList<Token> deque)
         {
+            // Token to add to the list
+            Token tok;
             string funcSS;
             int numberOfSubExpressions = CountBrackets(start, end);
             // Case: Function Analysis
@@ -71,8 +73,10 @@ namespace MathFunctionParser
                 {
                     if (leftBracketIdx == start)
                     {
-
+                        tok = new Token(FunctionType.RegularExpression);
                     }
+                    else
+                        tok = new Token(funcDB[funcSS]);
                 }
             }
             int indexOfNextOp = IndexOfNextOp(start, end);
