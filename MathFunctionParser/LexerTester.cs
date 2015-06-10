@@ -57,5 +57,17 @@ namespace MathFunctionParser
             Assert.AreEqual("Sin(x*y+Cos(y*Ln(y*3.14159)-78))", str);
 
         }
+        [TestCase]
+        public void TestFunctionsInSeries()
+        {
+            LinkedList<Token> list = lexer.AnalyzeString(" sin(x) - ln(5) + ln( sin( y) ^ cos(x))    ");
+            string str = "";
+            foreach (Token t in list)
+            {
+                str += t.ToString();
+            }
+            Assert.AreEqual("Sin(x)-Ln(5)+Ln(Sin(y)^Cos(x))", str);
+
+        }
     }
 }
