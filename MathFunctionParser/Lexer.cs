@@ -76,7 +76,7 @@ namespace MathFunctionParser
             if (retVal == end && numberOfSubExpressions > 0)
             {
                 int leftBracketIdx = expressionLC.IndexOf('(' , start);
-                int rightBracketIdx = expressionLC.LastIndexOf(')' , end-1);
+                int rightBracketIdx = IndexOfClosingBracket(leftBracketIdx, end);
                 // The from the start index to the index of '('
                 subString = expressionLC.Substring(start, leftBracketIdx-start);
                 Console.WriteLine("The subString before '(' is " + subString);
@@ -171,6 +171,30 @@ namespace MathFunctionParser
                 throw new LexerException(errType, leftCounter.ToString() + " " + rightCounter.ToString());
             }
             return leftCounter;
+        }
+        /** This function returns the index of the next ')' bracket matching 
+         *  the ')' bracket indexed at start. It searches the range 
+         *  start(inclusive) to end(exclusive).
+         */
+        private int IndexOfClosingBracket(int start, int end)
+        {
+            int bracketCounter = 0;
+            int i = start;
+            for (; i < end; i++)
+            {
+                switch (expression[i])
+                {
+                    case '(':
+                        bracketCounter++;
+                        break;
+                    case ')':
+                        if (--bracketCounter == 0)
+                            return i;
+                        break;
+                }
+
+            }
+            return i;
         }
         /** This function returns the index of the next operator or -1 if one
          *  cannot be found. It searchs expression from start(inclusive) to 
