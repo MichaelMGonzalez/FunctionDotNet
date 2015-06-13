@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionDB.cs" />
+    <Compile Include="ExpressionNode.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="LexerTester.cs" />
     <Compile Include="MathException.cs" />

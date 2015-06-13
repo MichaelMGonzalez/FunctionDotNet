@@ -16,7 +16,8 @@ namespace MathFunctionParser
         private ExpressionNode rightNode;
         public Func<double, double, double> evalFunc;
 
-        // Constructor
+        // Constructors
+        public ExpressionNode() { }
         public ExpressionNode(ExpressionNode left, ExpressionNode right)
         {
             leftNode = left;
@@ -24,9 +25,20 @@ namespace MathFunctionParser
         }
 
         // Methods
-        public double Evaluate()
+        public virtual double Evaluate()
         {
             return evalFunc(leftNode.Evaluate(), rightNode.Evaluate());
         }
+    }
+    class ConstantNode : ExpressionNode
+    {
+        // Fields
+        private double value;
+
+        // Constructor
+        public ConstantNode(double value) { this.value = value; }
+
+        // Methods
+        override public double Evaluate() { return value; }
     }
 }
