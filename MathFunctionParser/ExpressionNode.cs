@@ -41,4 +41,23 @@ namespace MathFunctionParser
         // Methods
         override public double Evaluate() { return value; }
     }
+    class VariableNode : ExpressionNode
+    {
+        // Fields
+        private string varName;
+        private SortedDictionary<string, double> varDB;
+
+        // Constructor
+        public VariableNode(string name, SortedDictionary<string, double> db)
+        {
+            this.varName = name;
+            varDB = db;
+        }
+
+        // Methods
+        public override double Evaluate()
+        {
+            return varDB[varName];
+        }
+    }
 }
