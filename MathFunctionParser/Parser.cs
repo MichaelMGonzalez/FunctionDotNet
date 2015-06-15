@@ -16,6 +16,7 @@ namespace MathFunctionParser
         SortedDictionary<string, Token> varEvalDB;
         SortedDictionary<string, Token> constDB;
         Lexer lexer;
+        Evaluator evaluator; 
         LinkedList<Token> tokenList;
 
         // Constructors
@@ -33,7 +34,7 @@ namespace MathFunctionParser
         public Evaluator Parse(string expression)
         {
             tokenList = lexer.AnalyzeString(expression);
-            Evaluator evaluator = new Evaluator(E());
+            evaluator = new Evaluator(E());
             return evaluator;
         }
         /** E -> P + E |
@@ -81,6 +82,9 @@ namespace MathFunctionParser
                         new ParserException(errorMsg);
                     }
                     return new ConstantNode(value);
+                case TokenType.Variable:
+                    string name = next.expression;
+                    return new VariableNode(name, evaluator.GetVarValueMap);
             }
         }
     }
