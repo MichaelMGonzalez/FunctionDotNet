@@ -29,9 +29,8 @@ namespace MathFunctionParser
         // Default constructor
         // Sets the DB dictionaries to default DBs
         public Lexer() 
-            : this(ExpressionDB.GetDefaultVarDB(), ExpressionDB.GetDefaultConstDB())
-        {
-        }
+            : this(ExpressionDB.GetDefaultVarDB(),
+                   ExpressionDB.GetDefaultConstDB()){}
         // This constructor allows the use of custom variables and constants
         public Lexer(SortedDictionary<string, Token> varDB,
                      SortedDictionary<string, Token> constDB)
