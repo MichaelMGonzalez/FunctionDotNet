@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace MathFunctionParser
 {
+    public class ParserException : Exception
+    {
+        public ParserException(string errorMsg) : base(errorMsg) { }
+    }
     public class LexerException : Exception
     {
         public enum Type

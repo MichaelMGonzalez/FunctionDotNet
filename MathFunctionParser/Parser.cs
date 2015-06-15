@@ -15,6 +15,7 @@ namespace MathFunctionParser
         SortedDictionary<string, Token> varDB;
         SortedDictionary<string, Token> constDB;
         Lexer lexer;
+        LinkedList<Token> tokenList;
 
         // Constructors
         public Parser() 
@@ -30,15 +31,15 @@ namespace MathFunctionParser
         // Methods
         public EvaluatorNode Parse(string expression)
         {
+            tokenList = lexer.AnalyzeString(expression);
             // TODO: Change return value
-            LinkedList<Token> tokenList = lexer.AnalyzeString(expression);
             return null;
         }
         /** E -> P + E |
          *       P - E |
          *       P
          */
-        public EvaluatorNode E()
+        private EvaluatorNode E()
         {
             return P();
         }
@@ -46,23 +47,40 @@ namespace MathFunctionParser
          *       K / P |
          *       K
          */
-        public EvaluatorNode P()
+        private EvaluatorNode P()
         {
             return K();
         }
         /** K -> -K | R */
-        public EvaluatorNode K()
+        private EvaluatorNode K()
         {
             return R();
         }
         /** R -> V ^ V | R */
-        public EvaluatorNode R()
+        private EvaluatorNode R()
         {
             return V();
         }
         /** V -> Constant | Function | (E) */
-        public EvaluatorNode V()
+        private EvaluatorNode V()
         {
+            Token next = tokenList.First.Value;
+            switch (next.type)
+            {
+                case TokenType.Constant:
+                    double value = 0;
+                    try
+                    {
+                        value = Double.Parse(next.expression);
+                    }
+                    catch (FormatException e)
+                    {
+                        string errorMsg = next.expression;
+                        errorMsg += " is not a defined variable or constant!";
+                        new ParserException(errorMsg);
+                    }
+                    return new ConstantNode(value);
+            }
         }
     }
 }
