@@ -31,7 +31,38 @@ namespace MathFunctionParser
         public EvaluatorNode Parse(string expression)
         {
             // TODO: Change return value
+            LinkedList<Token> tokenList = lexer.AnalyzeString(expression);
             return null;
+        }
+        /** E -> P + E |
+         *       P - E |
+         *       P
+         */
+        public EvaluatorNode E()
+        {
+            return P();
+        }
+        /** P -> K * P |
+         *       K / P |
+         *       K
+         */
+        public EvaluatorNode P()
+        {
+            return K();
+        }
+        /** K -> -K | R */
+        public EvaluatorNode K()
+        {
+            return R();
+        }
+        /** R -> V ^ V | R */
+        public EvaluatorNode R()
+        {
+            return V();
+        }
+        /** V -> Constant | Function | (E) */
+        public EvaluatorNode V()
+        {
         }
     }
 }
