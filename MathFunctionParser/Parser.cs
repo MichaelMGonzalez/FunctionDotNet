@@ -85,7 +85,18 @@ namespace MathFunctionParser
                 case TokenType.Variable:
                     string name = next.expression;
                     return new VariableNode(name, evaluator.GetVarValueMap);
+                case TokenType.Function:
+                    LinkedList<Token> oldList = tokenList;
+                    tokenList = next.subList;
+                    EvaluatorNode returnVal = Function(E());
+                    tokenList = oldList;
+                    return returnVal;
             }
+            return null;
+        }
+        private EvaluatorNode Function(EvaluatorNode node)
+        {
+
         }
     }
 }
