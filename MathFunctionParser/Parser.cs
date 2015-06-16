@@ -97,6 +97,7 @@ namespace MathFunctionParser
         private EvaluatorNode Function(EvaluatorNode node, FunctionType func)
         {
             Func<double, double> function = x => x;
+            Func<double, double, double> originalFunc = node.evalFunc;
             switch(func) {
                 case FunctionType.Sin:
                     function = x => Math.Sin(x);
@@ -116,8 +117,26 @@ namespace MathFunctionParser
                 case FunctionType.Arctan:
                     function = x => Math.Atan(x);
                     break;
+                case FunctionType.Sinh:
+                    function = x => Math.Sinh(x);
+                    break;
+                case FunctionType.Cosh:
+                    function = x => Math.Cosh(x);
+                    break;
+                case FunctionType.Tanh:
+                    function = x => Math.Tanh(x);
+                    break;
+                case FunctionType.Arcsinh:
+                    function = x => Math.Log(x + Math.Sqrt(x*x+1));
+                    break;
+                case FunctionType.Arccosh:
+                    function = x => Math.Log(x + Math.Sqrt(x+1)*Math.Sqrt(x-1));
+                    break;
+                case FunctionType.Arctanh:
+                    function = x => (Math.Log(1+x)-Math.Log(1-x))/2;
+                    break;
             }
-            node.evalFunc = (double l, double r) => function(node.evalFunc(l,r));
+            node.evalFunc = (double l, double r) => function(originalFunc(l,r));
             
         }
     }
