@@ -88,15 +88,37 @@ namespace MathFunctionParser
                 case TokenType.Function:
                     LinkedList<Token> oldList = tokenList;
                     tokenList = next.subList;
-                    EvaluatorNode returnVal = Function(E());
+                    EvaluatorNode returnVal = Function(E(), next.function);
                     tokenList = oldList;
                     return returnVal;
             }
             return null;
         }
-        private EvaluatorNode Function(EvaluatorNode node)
+        private EvaluatorNode Function(EvaluatorNode node, FunctionType func)
         {
-
+            Func<double, double> function = x => x;
+            switch(func) {
+                case FunctionType.Sin:
+                    function = x => Math.Sin(x);
+                    break;
+                case FunctionType.Cos:
+                    function = x => Math.Cos(x);
+                    break;
+                case FunctionType.Tan:
+                    function = x => Math.Tan(x);
+                    break;
+                case FunctionType.Arcsin:
+                    function = x => Math.Asin(x);
+                    break;
+                case FunctionType.Arccos:
+                    function = x => Math.Acos(x);
+                    break;
+                case FunctionType.Arctan:
+                    function = x => Math.Atan(x);
+                    break;
+            }
+            node.evalFunc = (double l, double r) => function(node.evalFunc(l,r));
+            
         }
     }
 }
