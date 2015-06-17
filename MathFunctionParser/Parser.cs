@@ -117,6 +117,22 @@ namespace MathFunctionParser
                 case FunctionType.Arctan:
                     function = x => Math.Atan(x);
                     break;
+                case FunctionType.Csc:
+                    function = x => ((double)1) / Math.Sin(x);
+                    break;
+                case FunctionType.Sec:
+                    function = x => ((double)1) / Math.Cos(x);
+                    break;
+                case FunctionType.Cot:
+                    function = x => ((double)1) / Math.Tan(x);
+                    break;
+                case FunctionType.Arccsc:
+                    function = x => Math.Asin(((double)1) / x);
+                    break;
+                case FunctionType.Arcsec:
+                    function = x => Math.Acos(((double)1) / x);
+                    break;
+                //case FunctionType.Arccot:
                 case FunctionType.Sinh:
                     function = x => Math.Sinh(x);
                     break;
@@ -137,7 +153,7 @@ namespace MathFunctionParser
                     break;
             }
             node.evalFunc = (double l, double r) => function(originalFunc(l,r));
-            
+            return node;
         }
     }
 }
