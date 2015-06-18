@@ -132,7 +132,9 @@ namespace MathFunctionParser
                 case FunctionType.Arcsec:
                     function = x => Math.Acos(((double)1) / x);
                     break;
-                //case FunctionType.Arccot:
+                case FunctionType.Arccot:
+                    function = x => Math.Atan(((double)1) / x);
+                    break;
                 case FunctionType.Sinh:
                     function = x => Math.Sinh(x);
                     break;
