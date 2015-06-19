@@ -96,65 +96,83 @@ namespace MathFunctionParser
         }
         private EvaluatorNode Function(EvaluatorNode node, FunctionType func)
         {
-            Func<double, double> function = x => x;
+            Func<double, double> f = x => x;
             Func<double, double, double> originalFunc = node.evalFunc;
             switch(func) {
                 case FunctionType.Sin:
-                    function = x => Math.Sin(x);
+                    f = x => Math.Sin(x);
                     break;
                 case FunctionType.Cos:
-                    function = x => Math.Cos(x);
+                    f = x => Math.Cos(x);
                     break;
                 case FunctionType.Tan:
-                    function = x => Math.Tan(x);
+                    f = x => Math.Tan(x);
                     break;
                 case FunctionType.Arcsin:
-                    function = x => Math.Asin(x);
+                    f = x => Math.Asin(x);
                     break;
                 case FunctionType.Arccos:
-                    function = x => Math.Acos(x);
+                    f = x => Math.Acos(x);
                     break;
                 case FunctionType.Arctan:
-                    function = x => Math.Atan(x);
+                    f = x => Math.Atan(x);
                     break;
                 case FunctionType.Csc:
-                    function = x => ((double)1) / Math.Sin(x);
+                    f = x => ((double)1) / Math.Sin(x);
                     break;
                 case FunctionType.Sec:
-                    function = x => ((double)1) / Math.Cos(x);
+                    f = x => ((double)1) / Math.Cos(x);
                     break;
                 case FunctionType.Cot:
-                    function = x => ((double)1) / Math.Tan(x);
+                    f = x => ((double)1) / Math.Tan(x);
                     break;
                 case FunctionType.Arccsc:
-                    function = x => Math.Asin(((double)1) / x);
+                    f = x => Math.Asin(((double)1) / x);
                     break;
                 case FunctionType.Arcsec:
-                    function = x => Math.Acos(((double)1) / x);
+                    f = x => Math.Acos(((double)1) / x);
                     break;
                 case FunctionType.Arccot:
-                    function = x => Math.Atan(((double)1) / x);
+                    f = x => Math.Atan(((double)1) / x);
                     break;
                 case FunctionType.Sinh:
-                    function = x => Math.Sinh(x);
+                    f = x => Math.Sinh(x);
                     break;
                 case FunctionType.Cosh:
-                    function = x => Math.Cosh(x);
+                    f = x => Math.Cosh(x);
                     break;
                 case FunctionType.Tanh:
-                    function = x => Math.Tanh(x);
+                    f = x => Math.Tanh(x);
                     break;
                 case FunctionType.Arcsinh:
-                    function = x => Math.Log(x + Math.Sqrt(x*x+1));
+                    f = x => Math.Log(x + Math.Sqrt(x*x+1));
                     break;
                 case FunctionType.Arccosh:
-                    function = x => Math.Log(x + Math.Sqrt(x+1)*Math.Sqrt(x-1));
+                    f = x => Math.Log(x + Math.Sqrt(x+1)*Math.Sqrt(x-1));
                     break;
                 case FunctionType.Arctanh:
-                    function = x => (Math.Log(1+x)-Math.Log(1-x))/2;
+                    f = x => (Math.Log(1+x)-Math.Log(1-x))/2;
+                    break;
+                case FunctionType.Csch:
+                    f = x => ((double)1) / Math.Sinh(x);
+                    break;
+                case FunctionType.Sech:
+                    f = x => ((double)1) / Math.Cosh(x);
+                    break;
+                case FunctionType.Coth:
+                    f = x => ((double)1) / Math.Tanh(x);
+                    break;
+                case FunctionType.Arccsch:
+                    f = x => Math.Log(Math.Sqrt(((double)1) / (x * x)) + (((double)1) / x));
+                    break;
+                //case FunctionType.Arcsech:
+                    f = x => Math.Acosh(((double)1) / x);
+                    break;
+                //case FunctionType.Arccoth:
+                    f = x => Math.Atan(((double)1) / x);
                     break;
             }
-            node.evalFunc = (double l, double r) => function(originalFunc(l,r));
+            node.evalFunc = (double l, double r) => f(originalFunc(l,r));
             return node;
         }
     }
