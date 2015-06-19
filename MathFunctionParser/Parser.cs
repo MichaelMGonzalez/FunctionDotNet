@@ -56,6 +56,16 @@ namespace MathFunctionParser
         /** K -> -K | R */
         private EvaluatorNode K()
         {
+            Token next = tokenList.First.Value;
+            if (next.expression != null  && next.expression.Equals("-"))
+            {
+                tokenList.RemoveFirst();
+                ConstantNode leftNode = new ConstantNode(-1);
+                EvaluatorNode rightNode = R();
+                EvaluatorNode kNode = new EvaluatorNode(leftNode, rightNode);
+                kNode.evalFunc = (l, r) => l * r;
+                return kNode;
+            }
             return R();
         }
         /** R -> V ^ V | R */
@@ -68,7 +78,6 @@ namespace MathFunctionParser
                 EvaluatorNode rightNode = V();
                 EvaluatorNode rNode = new EvaluatorNode(vNode, rightNode);
                 rNode.evalFunc = (l, r) => Math.Pow(l, r);
-                tokenList.RemoveFirst();
                 return rNode;
             }
             return vNode;

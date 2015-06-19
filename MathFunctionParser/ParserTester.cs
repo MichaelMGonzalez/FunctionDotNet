@@ -55,6 +55,24 @@ namespace MathFunctionParser
             actual = Math.Pow(actual, Math.Pow(Math.Cos(5), Math.Log(5)));
             Assert.AreEqual(actual, evaluator.Evaluate());
         }
+        [TestCase]
+        public void TestSimpleNegation()
+        {
+            evaluator = parser.Parse("-5");
+            Assert.AreEqual(-5, evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestFunctionNegation()
+        {
+            evaluator = parser.Parse("-Cos(5)");
+            Assert.AreEqual(-1 * Math.Cos(5), evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestOddPowerNegation()
+        {
+            evaluator = parser.Parse("-2^3");
+            Assert.AreEqual(Math.Pow(-2, 3), evaluator.Evaluate());
+        }
         
         
     }
