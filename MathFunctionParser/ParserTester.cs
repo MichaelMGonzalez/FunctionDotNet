@@ -124,6 +124,21 @@ namespace MathFunctionParser
             double expect = (Math.Sin(5) + 2 * Math.Cos(7));
             Assert.AreEqual(expect, evaluator.Evaluate());
         }
+        [TestCase]
+        public void TestNestedMultivariableFunctionTime()
+        {
+            evaluator = parser.Parse("Sin(x) + Cos(y) * 2");
+            for( int x = 0; x < 100; x++ )
+            {
+                evaluator.SetVariable("x", x);
+                for (int y = 0; y < 100; y++)
+                {
+                    evaluator.SetVariable("y", y);
+                    double expect = (Math.Sin(x) + 2 * Math.Cos(y));
+                    Assert.AreEqual(expect, evaluator.Evaluate());
+                }
+            }
+        }
         
     }
 }
