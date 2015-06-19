@@ -98,6 +98,11 @@ namespace MathFunctionParser
         {
             Func<double, double> f = x => x;
             Func<double, double, double> originalFunc = node.evalFunc;
+
+            // The following declarations make this function easier to read
+            Func<double, double> Ln = x => Math.Log(x);
+            Func<double, double> Sqrt = x => Math.Log(x);
+            const double one = 1;
             switch(func) {
                 case FunctionType.Sin:
                     f = x => Math.Sin(x);
@@ -118,22 +123,22 @@ namespace MathFunctionParser
                     f = x => Math.Atan(x);
                     break;
                 case FunctionType.Csc:
-                    f = x => ((double)1) / Math.Sin(x);
+                    f = x => one / Math.Sin(x);
                     break;
                 case FunctionType.Sec:
-                    f = x => ((double)1) / Math.Cos(x);
+                    f = x => one / Math.Cos(x);
                     break;
                 case FunctionType.Cot:
-                    f = x => ((double)1) / Math.Tan(x);
+                    f = x => one / Math.Tan(x);
                     break;
                 case FunctionType.Arccsc:
-                    f = x => Math.Asin(((double)1) / x);
+                    f = x => Math.Asin(one / x);
                     break;
                 case FunctionType.Arcsec:
-                    f = x => Math.Acos(((double)1) / x);
+                    f = x => Math.Acos(one / x);
                     break;
                 case FunctionType.Arccot:
-                    f = x => Math.Atan(((double)1) / x);
+                    f = x => Math.Atan(one / x);
                     break;
                 case FunctionType.Sinh:
                     f = x => Math.Sinh(x);
@@ -145,28 +150,28 @@ namespace MathFunctionParser
                     f = x => Math.Tanh(x);
                     break;
                 case FunctionType.Arcsinh:
-                    f = x => Math.Log(x + Math.Sqrt(x*x+1));
+                    f = x => Ln(x + Sqrt(x*x+1));
                     break;
                 case FunctionType.Arccosh:
-                    f = x => Math.Log(x + Math.Sqrt(x+1)*Math.Sqrt(x-1));
+                    f = x => Ln(x + Sqrt(x+1)*Sqrt(x-1));
                     break;
                 case FunctionType.Arctanh:
-                    f = x => (Math.Log(1+x)-Math.Log(1-x))/2;
+                    f = x => (Ln(1+x)-Ln(1-x))/2;
                     break;
                 case FunctionType.Csch:
-                    f = x => ((double)1) / Math.Sinh(x);
+                    f = x => one / Math.Sinh(x);
                     break;
                 case FunctionType.Sech:
-                    f = x => ((double)1) / Math.Cosh(x);
+                    f = x => one / Math.Cosh(x);
                     break;
                 case FunctionType.Coth:
-                    f = x => ((double)1) / Math.Tanh(x);
+                    f = x => one / Math.Tanh(x);
                     break;
                 case FunctionType.Arccsch:
-                    f = x => Math.Log(Math.Sqrt(((double)1) / (x * x)) + (((double)1) / x));
+                    f = x => Ln(Sqrt(one / (x * x)) + (one / x));
                     break;
-                //case FunctionType.Arcsech:
-                    f = x => Math.Acosh(((double)1) / x);
+                case FunctionType.Arcsech:
+                    f = x => Ln(Sqrt(one / x - 1)*Sqrt(one / x + 1)+(one/x));
                     break;
                 //case FunctionType.Arccoth:
                     f = x => Math.Atan(((double)1) / x);
