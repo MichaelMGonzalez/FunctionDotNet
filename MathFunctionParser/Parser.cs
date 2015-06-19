@@ -51,7 +51,22 @@ namespace MathFunctionParser
          */
         private EvaluatorNode P()
         {
-            return K();
+            EvaluatorNode kNode = K();
+            if(tokenList.Count > 0 && tokenList.First.Value.expression != null)
+            {
+                Token next = tokenList.First.Value;
+                if (!next.expression.Equals("*") && !next.expression.Equals("/"))
+                    return kNode;
+                tokenList.RemoveFirst();
+                EvaluatorNode rightNode = P();
+                EvaluatorNode pNode = new EvaluatorNode(kNode, rightNode);
+                if (next.expression.Equals("*"))
+                    pNode.evalFunc = (l, r) => l * r;
+                if( next.expression.Equals("/"))
+                    pNode.evalFunc = (l, r) => l / r;
+                return pNode;
+            }
+            return kNode;
         }
         /** K -> -K | R */
         private EvaluatorNode K()

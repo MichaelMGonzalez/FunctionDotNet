@@ -73,7 +73,30 @@ namespace MathFunctionParser
             evaluator = parser.Parse("-2^3");
             Assert.AreEqual(Math.Pow(-2, 3), evaluator.Evaluate());
         }
-        
+        [TestCase]
+        public void TestSimpleMultiplication()
+        {
+            evaluator = parser.Parse("2*3");
+            Assert.AreEqual(6, evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestSimpleDivision()
+        {
+            evaluator = parser.Parse("8/2");
+            Assert.AreEqual(4, evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestFunctionMultiplication()
+        {
+            evaluator = parser.Parse("Cos(5) * Sinh(5)");
+            Assert.AreEqual(Math.Cos(5) * Math.Sinh(5), evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestNegatedFunctionMultiplication()
+        {
+            evaluator = parser.Parse("-Cos(-5) * -Sinh(-5)");
+            Assert.AreEqual(Math.Cos(-5) * Math.Sinh(-5), evaluator.Evaluate());
+        }
         
     }
 }
