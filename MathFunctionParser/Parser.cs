@@ -61,7 +61,17 @@ namespace MathFunctionParser
         /** R -> V ^ V | R */
         private EvaluatorNode R()
         {
-            return V();
+            EvaluatorNode vNode = V();
+            if (tokenList.Count != 0 && tokenList.First.Value.expression.Equals("^"))
+            {
+                tokenList.RemoveFirst();
+                EvaluatorNode rightNode = V();
+                EvaluatorNode rNode = new EvaluatorNode(vNode, rightNode);
+                rNode.evalFunc = (l, r) => Math.Pow(l, r);
+                tokenList.RemoveFirst();
+                return rNode;
+            }
+            return vNode;
         }
         /** V -> Constant | Function | (E) */
         private EvaluatorNode V()
@@ -82,9 +92,15 @@ namespace MathFunctionParser
                         errorMsg += " is not a defined variable or constant!";
                         new ParserException(errorMsg);
                     }
+                    Console.Write("Before removing node size is " + tokenList.Count);
+                    tokenList.RemoveFirst();
+                    Console.WriteLine(" and afterwards has size " + tokenList.Count);
                     return new ConstantNode(value);
                 case TokenType.Variable:
                     string name = next.expression;
+                    Console.Write("Before removing node size is " + tokenList.Count);
+                    tokenList.RemoveFirst();
+                    Console.WriteLine(" and afterwards has size " + tokenList.Count);
                     return new VariableNode(name, evaluator.GetVarValueMap());
                 case TokenType.Function:
                     // Save a copy of the old token list so the sub-list can
@@ -95,6 +111,9 @@ namespace MathFunctionParser
                     EvaluatorNode functionNode = Function(E(), next.function);
                     tokenList = oldList;
                     Console.WriteLine(functionNode.Evaluate());
+                    Console.Write("Before removing node size is " + tokenList.Count);
+                    tokenList.RemoveFirst();
+                    Console.WriteLine(" and afterwards has size " + tokenList.Count);
                     return functionNode;
             }
             return null;
