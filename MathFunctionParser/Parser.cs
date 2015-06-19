@@ -176,6 +176,25 @@ namespace MathFunctionParser
                 case FunctionType.Arccoth:
                     f = x => (Ln(1-x)-Ln(1+x))/2;
                     break;
+                case FunctionType.Ln:
+                    f = Ln;
+                    break;
+                case FunctionType.Log:
+                    f = x => Math.Log10(x);
+                    break;
+                case FunctionType.Floor:
+                    f = x => Math.Floor(x);
+                    break;
+                case FunctionType.Ceiling:
+                    f = x => Math.Ceiling(x);
+                    break;
+                case FunctionType.Sqrt:
+                    f = Sqrt;
+                    break;
+                case FunctionType.Abs:
+                    f = x => Math.Abs(x);
+                    break;
+
             }
             node.evalFunc = (double l, double r) => f(originalFunc(l,r));
             return node;
