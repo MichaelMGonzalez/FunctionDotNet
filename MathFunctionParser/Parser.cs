@@ -86,19 +86,23 @@ namespace MathFunctionParser
                     string name = next.expression;
                     return new VariableNode(name, evaluator.GetVarValueMap);
                 case TokenType.Function:
+                    // Save a copy of the old token list so the sub-list can
+                    // be recursively parsed
                     LinkedList<Token> oldList = tokenList;
                     tokenList = next.subList;
-                    EvaluatorNode returnVal = Function(E(), next.function);
+                    EvaluatorNode functionNode = Function(E(), next.function);
                     tokenList = oldList;
-                    return returnVal;
+                    return functionNode;
             }
             return null;
         }
         private EvaluatorNode Function(EvaluatorNode node, FunctionType func)
         {
+            // This function delegate represents the function to be applied to
+            // the node
             Func<double, double> f = x => x;
+            // This function delegate represents the node's original function
             Func<double, double, double> originalFunc = node.evalFunc;
-
             // The following declarations make this function easier to read
             Func<double, double> Ln = x => Math.Log(x);
             Func<double, double> Sqrt = x => Math.Log(x);
@@ -196,6 +200,8 @@ namespace MathFunctionParser
                     break;
 
             }
+            // Wrap the original function with the applied function and assign
+            // this new function to be the node's function delegate
             node.evalFunc = (double l, double r) => f(originalFunc(l,r));
             return node;
         }
