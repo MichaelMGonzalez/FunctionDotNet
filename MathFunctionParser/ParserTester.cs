@@ -97,6 +97,18 @@ namespace MathFunctionParser
             evaluator = parser.Parse("-Cos(-5) * -Sinh(-5)");
             Assert.AreEqual(Math.Cos(-5) * Math.Sinh(-5), evaluator.Evaluate());
         }
+        [TestCase]
+        public void TestSimpleAddition()
+        {
+            evaluator = parser.Parse("2+3");
+            Assert.AreEqual(5, evaluator.Evaluate());
+        }
+        [TestCase]
+        public void TestSimpleSubtration()
+        {
+            evaluator = parser.Parse("2-3");
+            Assert.AreEqual(-1, evaluator.Evaluate());
+        }
         
     }
 }
