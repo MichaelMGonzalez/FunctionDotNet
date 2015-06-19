@@ -19,6 +19,9 @@ namespace MathFunctionParser
         }
 
         // Methods
-        public SortedDictionary<string, double> GetVarValueMap;
+        public SortedDictionary<string, double> GetVarValueMap() {
+            return varRealValue; 
+        }
+        public double Evaluate() { return root.Evaluate(); }
     }
 }

@@ -36,10 +36,16 @@ namespace MathFunctionParser
         private double value;
 
         // Constructor
-        public ConstantNode(double value) { this.value = value; }
+        public ConstantNode(double value) { 
+            this.value = value;
+            this.evalFunc = delegate(double l, double r)
+            {
+                return value;
+            };
+        }
 
         // Methods
-        override public double Evaluate() { return value; }
+        override public double Evaluate() { return evalFunc(0,0); }
     }
     class VariableNode : EvaluatorNode
     {

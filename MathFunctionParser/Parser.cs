@@ -71,6 +71,7 @@ namespace MathFunctionParser
             {
                 case TokenType.Constant:
                     double value = 0;
+                    Console.WriteLine("Parsing constant token!");
                     try
                     {
                         value = Double.Parse(next.expression);
@@ -84,14 +85,16 @@ namespace MathFunctionParser
                     return new ConstantNode(value);
                 case TokenType.Variable:
                     string name = next.expression;
-                    return new VariableNode(name, evaluator.GetVarValueMap);
+                    return new VariableNode(name, evaluator.GetVarValueMap());
                 case TokenType.Function:
                     // Save a copy of the old token list so the sub-list can
                     // be recursively parsed
+                    Console.WriteLine("Parsing function token!");
                     LinkedList<Token> oldList = tokenList;
                     tokenList = next.subList;
                     EvaluatorNode functionNode = Function(E(), next.function);
                     tokenList = oldList;
+                    Console.WriteLine(functionNode.Evaluate());
                     return functionNode;
             }
             return null;

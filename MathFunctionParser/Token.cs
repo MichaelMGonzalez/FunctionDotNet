@@ -43,6 +43,8 @@ namespace MathFunctionParser
         Ln,
         Floor,
         Ceiling,
+        Sqrt,
+        Abs,
         RegularExpression
     }
     /** This class represents a token to be read by the expression parser */
