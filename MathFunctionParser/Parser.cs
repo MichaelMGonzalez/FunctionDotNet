@@ -34,7 +34,8 @@ namespace MathFunctionParser
         public Evaluator Parse(string expression)
         {
             tokenList = lexer.AnalyzeString(expression);
-            evaluator = new Evaluator(E());
+            evaluator = new Evaluator(varDB);
+            evaluator.root = E();
             return evaluator;
         }
         /** E -> P + E |
@@ -137,6 +138,7 @@ namespace MathFunctionParser
                     return new ConstantNode(value);
                 case TokenType.Variable:
                     string name = next.expression;
+                    Console.WriteLine(name);
                     Console.Write("Before removing node size is " + tokenList.Count);
                     tokenList.RemoveFirst();
                     Console.WriteLine(" and afterwards has size " + tokenList.Count);

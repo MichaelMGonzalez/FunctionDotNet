@@ -58,12 +58,15 @@ namespace MathFunctionParser
         {
             this.varName = name;
             varDB = db;
+            evalFunc = delegate(double l, double r)
+            {
+                return varDB[varName];
+            };
         }
 
         // Methods
         public override double Evaluate()
         {
-            return varDB[varName];
-        }
+            return evalFunc(0, 0);        }
     }
 }

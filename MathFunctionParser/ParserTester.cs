@@ -109,6 +109,21 @@ namespace MathFunctionParser
             evaluator = parser.Parse("2-3");
             Assert.AreEqual(-1, evaluator.Evaluate());
         }
+        [TestCase]
+        public void TestSimpleVariable()
+        {
+            evaluator = parser.Parse("x");
+            Assert.AreEqual(5, evaluator.EvaluateVariable("x", 5));
+        }
+        [TestCase]
+        public void TestSimpleMultivariableFunction()
+        {
+            evaluator = parser.Parse("Sin(x) + Cos(y) * 2");
+            evaluator.SetVariable("x", 5);
+            evaluator.SetVariable("y", 7);
+            double expect = (Math.Sin(5) + 2 * Math.Cos(7));
+            Assert.AreEqual(expect, evaluator.Evaluate());
+        }
         
     }
 }

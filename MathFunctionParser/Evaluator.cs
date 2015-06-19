@@ -10,12 +10,15 @@ namespace MathFunctionParser
     {
         // Fields
         private SortedDictionary<string, double> varRealValue;
-        private EvaluatorNode root;
+        internal EvaluatorNode root;
 
         // Constructor
-        public Evaluator(EvaluatorNode root) {
-            this.root = root;
+        public Evaluator( SortedDictionary<string, Token> varDB) {
             varRealValue = new SortedDictionary<string, double>();
+            foreach (string key in varDB.Keys)
+            {
+                varRealValue[key] = 0;
+            }
         }
 
         // Methods
@@ -23,5 +26,14 @@ namespace MathFunctionParser
             return varRealValue; 
         }
         public double Evaluate() { return root.Evaluate(); }
+        public void SetVariable(string var, double value)
+        {
+            varRealValue[var] = value;
+        }
+        public double EvaluateVariable(string var, double value)
+        {
+            SetVariable(var, value);
+            return Evaluate();
+        }
     }
 }
