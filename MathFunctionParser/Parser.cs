@@ -173,8 +173,8 @@ namespace MathFunctionParser
                 case FunctionType.Arcsech:
                     f = x => Ln(Sqrt(one / x - 1)*Sqrt(one / x + 1)+(one/x));
                     break;
-                //case FunctionType.Arccoth:
-                    f = x => Math.Atan(((double)1) / x);
+                case FunctionType.Arccoth:
+                    f = x => (Ln(1-x)-Ln(1+x))/2;
                     break;
             }
             node.evalFunc = (double l, double r) => f(originalFunc(l,r));
