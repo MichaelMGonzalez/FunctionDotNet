@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MathFunctionParser
 {
@@ -67,6 +66,8 @@ namespace MathFunctionParser
         // Methods
         public override double Evaluate()
         {
-            return evalFunc(0, 0);        }
+            return evalFunc(0, 0);
+        }
+
     }
 }
