@@ -9,7 +9,7 @@ namespace MathFunctionParser
     /** This class will parse a string containing a mathmatical function and 
      *  return an Expression Tree which can evaluate the function.
      */
-    class Parser
+    public class Parser
     {
         // Fields
         SortedDictionary<string, Token> varDB;

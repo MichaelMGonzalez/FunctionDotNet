@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathFunctionParser
 {
-    class Evaluator
+    public class Evaluator
     {
         // Fields
         private SortedDictionary<string, double> varRealValue;
