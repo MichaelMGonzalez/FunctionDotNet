@@ -13,6 +13,7 @@ namespace MathFunctionParser
         // Fields
         private EvaluatorNode leftNode;
         private EvaluatorNode rightNode;
+        internal int numOfVars = 0;
         public Func<double, double, double> evalFunc;
 
         // Constructors
@@ -21,6 +22,7 @@ namespace MathFunctionParser
         {
             leftNode = left;
             rightNode = right;
+            numOfVars = left.numOfVars + right.numOfVars;
         }
 
         // Methods
@@ -57,6 +59,7 @@ namespace MathFunctionParser
         {
             this.varName = name;
             varDB = db;
+            numOfVars = 1;
             evalFunc = delegate(double l, double r)
             {
                 return varDB[varName];
