@@ -34,5 +34,9 @@ namespace MathFunctionParser
             SetVariable(var, value);
             return Evaluate();
         }
+        public int GetNumberOfVars()
+        {
+            return root.numOfVars;
+        }
     }
 }

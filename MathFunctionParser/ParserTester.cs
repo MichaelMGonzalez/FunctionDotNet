@@ -113,6 +113,7 @@ namespace MathFunctionParser
         {
             evaluator = parser.Parse("x");
             Assert.AreEqual(5, evaluator.EvaluateVariable("x", 5));
+            Assert.AreEqual(1, evaluator.GetNumberOfVars());
         }
         [TestCase]
         public void TestSimpleMultivariableFunction()
@@ -122,6 +123,7 @@ namespace MathFunctionParser
             evaluator.SetVariable("y", 7);
             double expect = (Math.Sin(5) + 2 * Math.Cos(7));
             Assert.AreEqual(expect, evaluator.Evaluate());
+            Assert.AreEqual(2, evaluator.GetNumberOfVars());
         }
         [TestCase]
         public void TestNestedMultivariableFunctionTime()
