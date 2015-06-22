@@ -47,6 +47,7 @@ namespace MathFunctionParser
             db['-'] = new Token(TokenType.Operator, "-");
             db['*'] = new Token(TokenType.Operator, "*");
             db['/'] = new Token(TokenType.Operator, "/");
+            db['%'] = new Token(TokenType.Operator, "/");
             db['^'] = new Token(TokenType.Operator, "^");
             return db;
         } 

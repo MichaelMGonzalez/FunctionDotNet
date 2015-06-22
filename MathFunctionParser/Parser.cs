@@ -70,7 +70,7 @@ namespace MathFunctionParser
             if(tokenList.Count > 0 && tokenList.First.Value.expression != null)
             {
                 Token next = tokenList.First.Value;
-                if (!next.expression.Equals("*") && !next.expression.Equals("/"))
+                if (!next.expression.Equals("*") && !next.expression.Equals("/") && !next.expression.Equals("%"))
                     return kNode;
                 tokenList.RemoveFirst();
                 EvaluatorNode rightNode = P();
@@ -79,6 +79,8 @@ namespace MathFunctionParser
                     pNode.evalFunc = (l, r) => l * r;
                 if( next.expression.Equals("/"))
                     pNode.evalFunc = (l, r) => l / r;
+                if( next.expression.Equals("%"))
+                    pNode.evalFunc = (l, r) => l % r;
                 return pNode;
             }
             return kNode;

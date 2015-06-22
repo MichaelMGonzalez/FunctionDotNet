@@ -54,10 +54,10 @@
     <Compile Include="ExpressionDB.cs" />
     <Compile Include="EvaluatorNode.cs" />
     <Compile Include="Lexer.cs" />
-    <Compile Include="LexerTester.cs" />
+    <None Include="LexerTester.cs" />
     <Compile Include="MathException.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="ParserTester.cs" />
+    <None Include="ParserTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
   </ItemGroup>
