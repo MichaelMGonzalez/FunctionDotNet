@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MathFunctionParser
 {
@@ -21,8 +19,7 @@ namespace MathFunctionParser
         // Constructors
         public Parser() 
             : this(ExpressionDB.GetDefaultVarDB(), ExpressionDB.GetDefaultConstDB()){}
-        public Parser(SortedDictionary<string, Token> varDB,
-                      SortedDictionary<string, Token> constDB)
+        public Parser(SortedDictionary<string, Token> varDB, SortedDictionary<string, Token> constDB)
         {
             this.varDB = varDB;
             this.constDB = constDB;

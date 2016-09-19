@@ -86,7 +86,7 @@ namespace MathFunctionParser
                     else
                         tok = new Token(funcDB[subString]);
                     subString = expression.Substring(leftBracketIdx + 1, rightBracketIdx-leftBracketIdx-1);
-                    Lexer subLex = new Lexer();
+                    Lexer subLex = new Lexer(varDB,constDB);
                     tok.subList = subLex.AnalyzeString(subString);
                     list.AddLast(tok);
                     return (rightBracketIdx + 1);
