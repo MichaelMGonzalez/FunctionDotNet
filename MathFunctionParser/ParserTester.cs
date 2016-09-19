@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if NUnit
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,3 +144,4 @@ namespace MathFunctionParser
         
     }
 }
+#endif

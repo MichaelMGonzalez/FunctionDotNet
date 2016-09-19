@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if NUnit
 using NUnit.Framework;
 
 namespace MathFunctionParser
@@ -82,3 +83,4 @@ namespace MathFunctionParser
         }
     }
 }
+#endif
