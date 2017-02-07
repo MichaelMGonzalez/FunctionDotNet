@@ -128,7 +128,7 @@ namespace MathFunctionParser
                     {
                         string errorMsg = next.expression;
                         errorMsg += " is not a defined variable or constant!";
-                        new ParserException(errorMsg);
+                        throw new ParserException(errorMsg);
                     }
                     Console.Write("Before removing node size is " + tokenList.Count);
                     tokenList.RemoveFirst();
@@ -154,6 +154,8 @@ namespace MathFunctionParser
                     tokenList.RemoveFirst();
                     Console.WriteLine(" and afterwards has size " + tokenList.Count);
                     return functionNode;
+                default:
+                    throw new ParserException("Unknown Terminal Expression: " + next.ToString());
             }
             return null;
         }

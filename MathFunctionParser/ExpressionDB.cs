@@ -38,6 +38,8 @@ namespace MathFunctionParser
             db["log"] = FunctionType.Log;
             db["floor"] = FunctionType.Floor;
             db["ceiling"] = FunctionType.Ceiling;
+            db["abs"] = FunctionType.Abs;
+            db["sqrt"] = FunctionType.Sqrt;
             return db;
         } 
         public static SortedDictionary<char, Token> GetOperatorDB()
